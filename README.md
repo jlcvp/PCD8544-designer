@@ -1,4 +1,4 @@
-# PCD8544 Graphical LCD Designer#
+# PCD8544 Graphical LCD Designer
 
 PCD8544-designer is a HTML5 web application for designing bitmaps and fonts for the PCD8544 graphical lcd. 
 Encoded bitmaps and fonts work well with Adafruit's PCD8544 arduino library. This web application was written
