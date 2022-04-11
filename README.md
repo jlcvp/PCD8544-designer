@@ -1,11 +1,11 @@
-#PCD8544 Graphical LCD Designer#
+# PCD8544 Graphical LCD Designer#
 
 PCD8544-designer is a HTML5 web application for designing bitmaps and fonts for the PCD8544 graphical lcd. 
 Encoded bitmaps and fonts work well with Adafruit's PCD8544 arduino library. This web application was written
 for my own use and was designed to run locally on my own computer. I tested it with recent releases of
 Firefox, Safari, and Chrome. I did not test it in IE, nor do I intend to do so. 
 
-##Legalese:
+## Legalese:
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ Firefox, Safari, and Chrome. I did not test it in IE, nor do I intend to do so.
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-##Usage:
+## Usage:
 
 - Draw a line between the last pixel and the current pixel by holding down the shift key.
 - Undo with ctrl-z or command-z. No redo yet.
