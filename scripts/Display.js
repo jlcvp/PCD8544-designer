@@ -3,10 +3,10 @@ function Display(canvasID){
 	this.ctx = this.el.getContext('2d');
 	this.w = this.ctx.canvas.width;
 	this.h = this.ctx.canvas.height;
-	this.pixelSize = 10;
+	this.pixelSize = 20;
 	this.brushSize = 1;
-	this.rows = 7;
-	this.cols = 5;
+	this.rows = 24;
+	this.cols = 24;
 	this.ctx.lineWidth = 1;
 	this.stateBuffer = [];
 	this.previousStates = [];
@@ -16,7 +16,8 @@ function Display(canvasID){
 	this.editable = false;
 	this.showGrid = true;
 	this.showEncoding = true;
-	this.encodeAsBitmap = false;
+	this.encodeAsBitmap = true;
+	this.storeOnFlash = true;
 	this.shiftIsDown = false;
 
 	this.zeroBuffer = function(){
@@ -33,26 +34,31 @@ function Display(canvasID){
 // draw the grid on the canvas 
 
 		var s = this.pixelSize;
-		var h_linecount = 0;
+		var v_linecount = 0
 		if (this.showGrid){
-			this.ctx.strokeStyle = "gray";
-
 			for(i=s; i<this.w; i+=s){
+				this.ctx.strokeStyle = "gray";
+				v_linecount += 1;
+				if (v_linecount === 8) {
+					v_linecount = 0;
+					this.ctx.linewidth = 2;
+					this.ctx.strokeStyle = "red";
+				}
 				this.ctx.beginPath();
 				this.ctx.moveTo(i, 0);
 				this.ctx.lineTo(i, this.h);
 				this.ctx.closePath();
 				this.ctx.stroke();
 			}
-
+			v_linecount = 0
 			for(var i=s; i<this.h; i+=s){
 				this.ctx.strokeStyle = "gray";
-				h_linecount += 1;
-				if (h_linecount === 8) {
-					h_linecount = 0;
+				v_linecount += 1;
+				if (v_linecount === 8) {
+					v_linecount = 0;
 					this.ctx.linewidth = 2;
 					this.ctx.strokeStyle = "red";
-				} 
+				}
 				this.ctx.beginPath();
 				this.ctx.moveTo(0, i);
 				this.ctx.lineTo(this.w, i);
@@ -67,64 +73,119 @@ function Display(canvasID){
 // translate the bits in the buffer to 8bit hex values, organized in 8bit pages
 
 		var col_values = [];
-		var hex_string, binary_string;
-		var i, j;
-
-		for (i=0; i<this.cols; i++){
-// slice off the each column of values
-			binary_string = glcd.stateBuffer.slice(i*this.rows, (i*this.rows)+this.rows).join("");
-			if(this.rows > 8){
-// get the first 8 bits
-				binary_string = binary_string.slice(0, 8);
-			} else {
-				while(binary_string.length < 8){
-// pad with zeros if it's less than 8 bits in length
-					binary_string += "0";
+		
+		var transposed = (() => {
+			let transposed = [];
+			for(let i=0; i<this.rows; i++){
+				transposed[i] = [];
+			}
+			for(let i=0; i<this.rows; i++){
+				for(let j=0; j<this.cols; j++){
+					transposed[i][j] = this.stateBuffer[j*this.rows + i];
 				}
 			}
-			if (this.encodeAsBitmap){
-// reverse the bit order
-				binary_string = binary_string.split("").reverse().join("");
+			return transposed;
+		})()
+	
+		for(let row of transposed) {
+			let binary_string = row.join("")
+			for(let j=0; j< binary_string.length/8; j++) {
+				let byte_binary_string = binary_string.substring(j*8, (j+1)*8)
+				while(byte_binary_string.length<8) {
+					byte_binary_string += "0"
+				}
+				let hex_string = parseInt(byte_binary_string, 2).toString(16);
+				if(hex_string.length<2) {
+					hex_string = "0" + hex_string;
+				}
+
+				col_values.push("0x" + hex_string);
 			}
-// translate to hex
-			hex_string = parseInt(binary_string, 2).toString(16); 
-			while(hex_string.length < 2){
-// format the hex string to something usable in a sketch
-				hex_string = "0" + hex_string;
-			}
-// push to the output array
-			col_values.push("0x" + hex_string + ",");
 		}
+		
+		let retStr = `const uint8_t img_Width = ${this.cols};\n`
+		retStr += `const uint8_t img_Height = ${this.rows};\n`
+		retStr += `${this.storeOnFlash ? "PROGMEM ": ""}const unsigned char img[] = {\n`
+		
+		let startOfLine = true
+		for(let i=0; i<col_values.length; i++) {
+			let fragment = col_values[i]
 
-// repeat the above for each page (set of 8 rows)
+			if(startOfLine) {
+				retStr += "\t"
+				startOfLine = false
+			}
 
-		if (this.numPages > 1){
-			for (j=1; j<this.numPages; j++){
-				col_values.push("<br/><br/>");
-				for (i=0; i<this.cols; i++){
-
-					binary_string = glcd.stateBuffer.slice(i*this.rows, (i*this.rows) + this.rows).join("");
-					binary_string = binary_string.slice(8*j, 8*j + 8);
-					while(binary_string.length < 8){
-						binary_string += "0";
-					}
-
-					if (this.encodeAsBitmap){
-						binary_string = binary_string.split("").reverse().join("");
-					}
-
-					hex_string = parseInt(binary_string, 2).toString(16); 
-					while(hex_string.length < 2){
-						hex_string = "0" + hex_string;
-					}
-					col_values.push("0x" + hex_string + ",");
-				}
+			retStr += `${fragment}${i==col_values.length-1 ? "" : ", "}`
+			if((i+1)%16 == 0 && i < col_values.length-1 && i>0 ) {
+				console.log("Break line")
+				retStr += "\n"
+				startOfLine = true
 			}
 		}
 
-// return a string of all hex values
+		retStr += "\n};\n"
+		console.log("retStr: " + retStr)
+		retStr = retStr.replace(/\\n/g, "<br />")
+		retStr = retStr.replace(/\\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;")
+		console.log("retStrReplaced: " + retStr)
+		return retStr
 
-		return col_values.join(" ");
+// 		for (i=0; i<this.rows; i++){
+// // slice off the each column of values
+// 			binary_string = glcd.stateBuffer.slice(i*this.cols, (i*this.cols)+this.cols).join("");
+// 			if(this.cols > 8){
+// // get the first 8 bits
+// 				binary_string = binary_string.slice(0, 8);
+// 			} else {
+// 				while(binary_string.length < 8){
+// // pad with zeros if it's less than 8 bits in length
+// 					binary_string += "0";
+// 				}
+// 			}
+// 			if (this.encodeAsBitmap){
+// // reverse the bit order
+// 				binary_string = binary_string.split("").reverse().join("");
+// 			}
+// // translate to hex
+// 			hex_string = parseInt(binary_string, 2).toString(16); 
+// 			while(hex_string.length < 2){
+// // format the hex string to something usable in a sketch
+// 				hex_string = "0" + hex_string;
+// 			}
+// // push to the output array
+// 			col_values.push("0x" + hex_string + ",");
+// 		}
+
+// // repeat the above for each page (set of 8 rows)
+
+// 		if (this.numPages > 1){
+// 			for (j=1; j<this.numPages; j++){
+// 				col_values.push("<br/>");
+// 				for (i=0; i<this.rows; i++){
+
+// 					binary_string = glcd.stateBuffer.slice(i*this.cols, (i*this.cols) + this.cols).join("");
+// 					binary_string = binary_string.slice(8*j, 8*j + 8);
+// 					while(binary_string.length < 8){
+// 						binary_string += "0";
+// 					}
+
+// 					if (this.encodeAsBitmap){
+// 						binary_string = binary_string.split("").reverse().join("");
+// 					}
+
+// 					hex_string = parseInt(binary_string, 2).toString(16); 
+// 					while(hex_string.length < 2){
+// 						hex_string = "0" + hex_string;
+// 					}
+// 					col_values.push("0x" + hex_string + ",");
+// 				}
+// 			}
+// 		}
+
+// // return a string of all hex values
+
+// 		return col_values.join(" ");
 	},
 
 	this.drawPixel = function(evt){

@@ -15,12 +15,15 @@
 -->
 <html>
 <head>
-<title>ST7565 Designer</title>
+<title>PCD8544 Designer</title>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="./css/style.css" />
+<link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="./images/favicon.ico" type="image/x-icon">
 
 </head>
 <body>
+	<h1 class="pageTitle">PCD8544 Designer</h1>
 <div id="savedItemsContainer">
 	<div class="button close"></div>
 	<div id="savedItemsExport">
@@ -31,18 +34,18 @@
 </div>
 <div id="wrapper">
 	<div id="canvasField">
-		<canvas id="canvas" width=50 height=70></canvas>
+		<canvas id="canvas" width=480 height=480></canvas>
 	</div>
 	<div>
 		<div id="tools">
 			<div class="tool">
-				<span class="button" id="gridToggle">Hide Grid</span>&nbsp;|&nbsp;<span class="button" id="openEncoding">Show Encoding</span>
+				<span class="button" id="gridToggle">Hide Grid</span>&nbsp;|&nbsp;<span class="button" id="openEncoding">Show Code</span>
 				&nbsp;|&nbsp;
 				<span class="button" id="saveItem">Save Item</span>&nbsp;|&nbsp;<span class="button" id="openSavedItems">Show Saved Items</span>
 			</div>
 			<div class="tool">
-				Size:<input type="text" name="cols" size="2" maxlength="3" value="5"/>x
-				<input type="text" name="rows" size="2" maxlength="2" value="7"/>
+				Size:<input type="text" name="cols" size="2" maxlength="3" value="24"/>x
+				<input type="text" name="rows" size="2" maxlength="2" value="24"/>
 			</div>
 			<div id="colorBar">Color:<div class="swatch" id="white"></div><div class="swatch selected" id="black"></div></div>
 			<div class="tool">
@@ -54,8 +57,9 @@
 					</select>
 				</span>
 			</div>
-			<div class="tool">Page Bit order:&nbsp;<input type="radio" name="bit_order" class="" value="1" checked/>MSB at Top&nbsp;
-					  <input type="radio" name="bit_order" class="" value="0"/>MSB at Bottom&nbsp;
+			<div class="tool">Stored Image Location:&nbsp;
+				<input type="radio" name="bit_order" class="" value="1" checked/>ROM&nbsp;
+				<input type="radio" name="bit_order" class="" value="0"/>RAM&nbsp;
 			</div>
 			<div class="tool">
 				<span>Cell Size:</span>
@@ -69,7 +73,7 @@
 					</select>
 				</span>
 			</div>
-			<div id="ditherTools">
+			<div id="ditherTools" hidden>
 				<div class="tool">Filter:&nbsp;<select id="filter">
 							<option value="fs" selected>Floyd Steinberg</option>
 							<option value="atkinson">Atkinson</option>
@@ -88,7 +92,7 @@
 			<div id="clearBtn">Clear</div>
 		</div>
 	</div>
-	<div class="modal" id="encodingContainer"><div class="button close"></div><div id="hexOutput"></div></div>
+	<div class="modal" id="encodingContainer"><div class="button close"></div><div id="hexOutput"></div><div class="button" id="copyToClipboardBtn">COPY TO CLIPBOARD</div></div>
 	<input type="file" id="fileImport"/>
 	<div class="modal" id="jsonContainer"><div class="button close"></div><div id="jsonOutput"></div></div>
 </div>
@@ -108,9 +112,9 @@
 	}
 // initialize the UI form elements, in case cached values are being used (I'm talking to you, firefox)
 
-	$('input[type="text"][name="rows"]').val('7');
-	$('input[type="text"][name="cols"]').val('5');
-	$('#pixelSize option[value="10"]').prop('selected','selected');	
+	$('input[type="text"][name="rows"]').val('24');
+	$('input[type="text"][name="cols"]').val('24');
+	$('#pixelSize option[value="20"]').prop('selected','selected');	
 	$('#brushSize option[value="1"]').prop('selected','selected');	
 
 //	$('input:radio[name=filter][value="fs"]').prop('checked', true);
@@ -121,7 +125,7 @@
 
 // show the encoding for the display buffer (initialized to 0 for all pixels)
 
-	$('#hexOutput').html('<h3>Encoding:</h3>&nbsp;' + glcd.encode());
+	$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
 
 // attach events to the canvas -- mousedown, mousemove, and mouseup
 
@@ -130,13 +134,13 @@
 		glcd.previousStates.push(glcd.stateBuffer.slice());
 		glcd.editable = true;
 		glcd.drawPixel(evt);
-		$('#hexOutput').html('<h3>Encoding:</h3>&nbsp;' + glcd.encode());
+		$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
 	});
 
 	$('#canvas').mousemove(function(evt){
 		if (glcd.editable){
 			glcd.drawPixel(evt);
-			$('#hexOutput').html('<h3>Encoding:</h3>&nbsp;' + glcd.encode());
+			$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
 		}
 	});
 
@@ -171,45 +175,45 @@
 	$('#clearBtn').click(function(){
 		glcd.clear();
 		$('#hexOutput').html('');
-		$('#hexOutput').html('<h3>Encoding:</h3>&nbsp;' + glcd.encode());
+		$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
 	});
 
 // attach change event handler to the rows input. Clear and resize, reflect 0 encoding accordingly
 
 	$('input[type="text"][name="rows"]').change(function(){
 		var value = +$(this).val();
-		if (value > 64){
-			value = 64;
-			$(this).val('64');
+		if (value > 48){
+			value = 48;
+			$(this).val('48');
 		}
 		glcd.rows = value;
 		glcd.numPages = Math.ceil(glcd.rows/8);
 		glcd.ctx.canvas.height = value * glcd.pixelSize;
 		glcd.h = glcd.ctx.canvas.height;
 		glcd.clear();
-		$('#hexOutput').html('<h3>Encoding:</h3>&nbsp;' + glcd.encode());
+		$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
 	});
 
 // change event handler for cols input. Similar to the rows change event handler
  
 	$('input[type="text"][name="cols"]').change(function(){
 		var value = +$(this).val();
-		if (value > 128){
-			value = 128;
-			$(this).val('128');
+		if (value > 84){
+			value = 84;
+			$(this).val('84');
 		}
 		glcd.cols = value;
 		glcd.ctx.canvas.width = value * glcd.pixelSize;
 		glcd.w = glcd.ctx.canvas.width;
 		glcd.clear();
-		$('#hexOutput').html('<h3>Encoding:</h3>&nbsp;' + glcd.encode());
+		$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
 	});
 
 // Change event for the bit order radio button. Re-encode accordingly if it changes.
 
 	$('input:radio[name="bit_order"]').change(function(){
-		glcd.encodeAsBitmap = (+$(this).val()) ? false : true;
-		$('#hexOutput').html('<h3>Encoding:</h3>&nbsp;' + glcd.encode());
+		glcd.storeOnFlash = (+$(this).val()) ? true : false;
+		$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
 	});
 
 // check for shift key and ctrl-z or command-z 
@@ -225,7 +229,7 @@
 
 // if we popped the last item out of previousStates, don't draw the clear button (canvas is blank)
 
-				$('#hexOutput').html('<h3>Encoding:</h3>&nbsp;' + glcd.encode());
+				$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
 			}	
 
 			return false;
@@ -270,7 +274,7 @@
  
 	$('#openEncoding').click(function(){
 		var el = $('#encodingContainer');
-		var new_width = ((glcd.cols-5)/128)*600 + 200;
+		var new_width = 800
 		el.css({'width': new_width});
 		var offset = ($(document).width()/2) - (el.width()/2);
 
@@ -289,6 +293,15 @@
 	$(document).on('click', '.close', function(){
 		$(this).parent().hide();
 	});
+
+// copy to clipboard event handler
+	$("#copyToClipboardBtn").click(function(){
+		let text = glcd.encode()
+		navigator.clipboard.writeText(text);
+		console.log("Copied: ", text)
+		alert("Copied to clipboard!")
+	});
+
 
 // delete item from the saved items list
 
@@ -313,7 +326,7 @@
 		glcd.restoreItem(key);
 		$('input[type="text"][name="rows"]').val(glcd.rows);
 		$('input[type="text"][name="cols"]').val(glcd.cols);
-		$('#hexOutput').html('<h3>Encoding:</h3>&nbsp;' + glcd.encode());
+		$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
 	});
 
 	$('#fileImport').change(function(evt){
@@ -401,15 +414,15 @@
 		var reader = new FileReader();
 		$(reader).load(function(e){
 			var load;
-			if ((glcd.rows === 64) && (glcd.cols === 128)){
+			if ((glcd.rows === 48) && (glcd.cols === 84)){
 				glcd.clear();
 				$.when(dither_img.loadImage(e.target.result)).done(function(){
-					$('#hexOutput').html('<h3>Encoding:</h3>&nbsp;' + glcd.encode());
+					$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
 					$('#ditherTools').show();
 				});
 
 			} else {
-				alert("Drag and Drop for images only allowed if size set to 128x64");
+				alert("Drag and Drop for images only allowed if size set to 84x48");
 			}
 		});
 
