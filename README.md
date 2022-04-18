@@ -3,25 +3,13 @@
 PCD8544-designer is a HTML5 web application for designing bitmaps and fonts for the PCD8544 graphical lcd. 
 Encoded bitmaps and fonts work well with Adafruit's PCD8544 arduino library. This web application was written
 for my own use and was designed to run locally on my own computer. I tested it with recent releases of
-Firefox, Safari, and Chrome. I did not test it in IE, nor do I intend to do so. 
-
-## Legalese:
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+Firefox and Safari. I did not test it in Edge nor Chrome but it should work as well.
 
 ## Usage:
-
+### Live version
+The project is deployed to firebase hosting at [https://PCD8544designer.web.app](https://pcd8544designer.web.app/)  
+A mirror can be found on github pages [jlcvp.github.io/PCD8544-designer](https://jlcvp.github.io/PCD8544-designer/src)
+### Features
 - Draw a line between the last pixel and the current pixel by holding down the shift key.
 - Undo with ctrl-z or command-z. No redo yet.
 - Save and restore bitmaps/fonts from local storage
@@ -30,4 +18,5 @@ Firefox, Safari, and Chrome. I did not test it in IE, nor do I intend to do so.
 - Current quantization/dithering techniques available: Floyd-Steinberg, Atkinson, and Sierra Lite (Sierra-2-4A), and Threshold
 
 ## Credits:
-- Based on work from parent fork
+- Based on work from parent fork [pinsonn/st7565-designer](https://github.com/pinsonn/st7565-designer)
+
