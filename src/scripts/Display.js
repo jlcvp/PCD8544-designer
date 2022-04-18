@@ -112,7 +112,7 @@ function Display(canvasID){
 			let fragment = col_values[i]
 
 			if(startOfLine) {
-				retStr += "\t"
+				retStr += "&nbsp;&nbsp;&nbsp;&nbsp;"
 				startOfLine = false
 			}
 
@@ -127,7 +127,7 @@ function Display(canvasID){
 		retStr += "\n};\n"
 		console.log("retStr: " + retStr)
 		retStr = retStr.replace(/\\n/g, "<br />")
-		retStr = retStr.replace(/\\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;")
+		//retStr = retStr.replace(/\\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;")
 		console.log("retStrReplaced: " + retStr)
 		return retStr
 

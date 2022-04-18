@@ -137,13 +137,13 @@ span.button:hover{
 	visibility: hidden;
 }
 
-#jsonContainer{
+/* #jsonContainer{
 	
 //	overflow-x: auto;
 
 	overflow-y: scroll;
 	word-wrap: break-word;
-}
+} */
 
 #jsonOutput{
 	text-align: left;
@@ -154,5 +154,5 @@ span.button:hover{
 	word-wrap: normal;
 	white-space: pre;
 	margin: 24px;
-	
+	font-family: monospace;
 }
