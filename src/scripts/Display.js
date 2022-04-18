@@ -118,17 +118,16 @@ function Display(canvasID){
 
 			retStr += `${fragment}${i==col_values.length-1 ? "" : ", "}`
 			if((i+1)%16 == 0 && i < col_values.length-1 && i>0 ) {
-				console.log("Break line")
 				retStr += "\n"
 				startOfLine = true
 			}
 		}
 
 		retStr += "\n};\n"
-		console.log("retStr: " + retStr)
+		// console.log("retStr: " + retStr)
 		retStr = retStr.replace(/\\n/g, "<br />")
 		//retStr = retStr.replace(/\\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;")
-		console.log("retStrReplaced: " + retStr)
+		// console.log("retStrReplaced: " + retStr)
 		return retStr
 
 // 		for (i=0; i<this.rows; i++){

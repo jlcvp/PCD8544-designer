@@ -73,7 +73,7 @@
 					</select>
 				</span>
 			</div>
-			<div id="ditherTools" hidden>
+			<!-- <div id="ditherTools" hidden>
 				<div class="tool">Filter:&nbsp;<select id="filter">
 							<option value="fs" selected>Floyd Steinberg</option>
 							<option value="atkinson">Atkinson</option>
@@ -87,10 +87,16 @@
 				<div class="tool">Scan Direction:&nbsp;<input type="radio" name="scan_direction" class="" value="1" checked/>Horizontal&nbsp;
 					  <input type="radio" name="scan_direction" class="" value="0"/>Vertical&nbsp;
 				</div>
-			</div>
+			</div> -->
 
-			<div id="clearBtn">Clear</div>
+			<div id="clearBtn" class="button">Clear</div>
 		</div>
+	</div>
+	<div class="footer" style="font-size: small;">
+		<p>
+			This website provides a visual reference to generate code in C for the PCD8544 powered display (nokia 5110).<br>
+			You can save your artworks and load them later, we use browser's local storage only and no drawing data is ever uploaded).
+		</p>
 	</div>
 	<div class="modal" id="encodingContainer"><div class="button close"></div><div id="hexOutput"></div><div class="button" id="copyToClipboardBtn">COPY TO CLIPBOARD</div></div>
 	<input type="file" id="fileImport"/>
@@ -298,7 +304,6 @@
 	$("#copyToClipboardBtn").click(function(){
 		let text = glcd.encode()
 		navigator.clipboard.writeText(text);
-		console.log("Copied: ", text)
 		alert("Copied to clipboard!")
 	});
 
