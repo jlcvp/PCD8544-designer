@@ -109,11 +109,6 @@ body {
 #copyToClipboardBtn {
 	cursor: pointer;
 	float: right;
-	padding: 8px;
-	bottom: 10px;
-	height: 17px;
-	border-radius: 4px;
-	border: 1px solid black;
 }
 
 
