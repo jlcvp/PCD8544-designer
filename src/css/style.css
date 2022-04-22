@@ -104,9 +104,6 @@ body {
 
 .close {
 	float: right;
-	width: 20px;
-	height: 17px;
-	background-image: url('../images/close_small.png');
 }
 
 #copyToClipboardBtn {
