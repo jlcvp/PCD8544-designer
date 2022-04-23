@@ -85,12 +85,26 @@
 				</div>
 				<div class="tool">
 					<span class="me-1">Brush Size</span>
-					<span><select class="form-select" id="brushSize">
+					<!-- <span><select class="form-select" id="brushSize">
 							<option value="1" selected>1 px</option>
 							<option value="2">2 px</option>
 							<option value="4">4 px</option>
 						</select>
-					</span>
+					</span> -->
+					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+						<input type="radio" value="1" class="btn-check" name="brush-size-radio" id="brush-size1"
+							autocomplete="off" checked>
+						<label class="btn btn-outline-primary btn-sm" for="brush-size1">1 px</label>
+
+						<input type="radio" value="2" class="btn-check" name="brush-size-radio" id="brush-size2"
+							autocomplete="off">
+						<label class="btn btn-outline-primary btn-sm" for="brush-size2">2 px</label>
+
+						<input type="radio" value="4" class="btn-check" name="brush-size-radio" id="brush-size4"
+							autocomplete="off">
+						<label class="btn btn-outline-primary btn-sm" for="brush-size4">4 px</label>
+							
+					</div>
 				</div>
 
 				<div class="tool">
@@ -185,6 +199,7 @@
 			$('input:radio[name=scan_pattern][value=1]').prop('checked', true);
 			$('input:radio[name=scan_direction][value=1]').prop('checked', true);
 			$('input:radio[name=storagelocationradio][value=1]').prop('checked', true);
+			$('input:radio[name=brush-size-radio][value=1]').prop('checked', true);
 
 			// show the encoding for the display buffer (initialized to 0 for all pixels)
 
@@ -225,11 +240,17 @@
 				glcd.drawBuffer();
 			});
 
-			// attach a change event handler to the brush size select box
+			// attach a change event handler to the brush size select radio
 
-			$('#brushSize').change(function () {
-				glcd.brushSize = +$('#brushSize option:selected').val();
+
+			$('input:radio[name="storagelocationradio"]').change(function () {
+				glcd.brushSize = +$(this).val();
 			});
+
+
+			// $('#brushSize').change(function () {
+			// 	glcd.brushSize = +$('#brushSize option:selected').val();
+			// });
 
 			// attach an event handler to the clear button. 
 			// Because it's dynamically created, use "on" to
@@ -272,8 +293,7 @@
 				$('#hexOutput').html(glcd.encode());
 			});
 
-			// Change event for the bit order radio button. Re-encode accordingly if it changes.
-
+			// Change event for the storage location radio button. Re-encode accordingly if it changes.
 			$('input:radio[name="storagelocationradio"]').change(function () {
 				glcd.storeOnFlash = (+$(this).val()) ? true : false;
 				$('#hexOutput').html(glcd.encode());
