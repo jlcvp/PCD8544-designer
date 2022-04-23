@@ -93,7 +93,8 @@
 					</span>
 				</div>
 
-				<div class="tool">Stored Image Location &nbsp;&nbsp;
+				<div class="tool">
+					<span class="me-1">Stored Image Location</span>
 					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 						<input type="radio" value="1" class="btn-check" name="storagelocationradio" id="btnradio1"
 							autocomplete="off" checked>
@@ -104,13 +105,8 @@
 						<label class="btn btn-outline-primary btn-sm" for="btnradio2">RAM</label>
 					</div>
 				</div>
-
-				<div class="tool">Stored Image Location:&nbsp;
-					<input type="radio" name="bit_order" class="" value="1" checked />ROM&nbsp;
-					<input type="radio" name="bit_order" class="" value="0" />RAM&nbsp;
-				</div>
 				<div class="tool">
-					<span>Cell Size:</span>
+					<span class="me-1">Cell Size:</span>
 					<span>
 						<select id="pixelSize">
 							<option value="5">5 px</option>
@@ -121,29 +117,12 @@
 						</select>
 					</span>
 				</div>
-				<!-- <div id="ditherTools" hidden>
-				<div class="tool">Filter:&nbsp;<select id="filter">
-							<option value="fs" selected>Floyd Steinberg</option>
-							<option value="atkinson">Atkinson</option>
-							<option value="sierra">Sierra Lite</option>
-							<option value="threshold">Threshold</option>
-						</select>
-				</div>
-				<div class="tool">Scan Pattern:&nbsp;<input type="radio" name="scan_pattern" class="" value="1" checked/>Raster&nbsp;
-					  <input type="radio" name="scan_pattern" class="" value="0"/>Serpentine&nbsp;
-				</div>
-				<div class="tool">Scan Direction:&nbsp;<input type="radio" name="scan_direction" class="" value="1" checked/>Horizontal&nbsp;
-					  <input type="radio" name="scan_direction" class="" value="0"/>Vertical&nbsp;
-				</div>
-			</div> -->
-
-				<!-- <div id="clearBtn" class="button">Clear</div> -->
 				<div class="pt-3"></div>
 				<button id="clearBtn" type="button" class="btn btn-danger">Clear Canvas</button>
 			</div>
 		</div>
-		<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-			<p>
+		<footer class="d-flex flex-wrap justify-content-center align-items-center py-3 my-4 border-top">
+			<p class="text-center">
 				This website provides a visual reference to generate code in C for the PCD8544 powered display (nokia
 				5110).<br>
 				You can save your artworks and load them later, we use browser's local storage only and no drawing data
@@ -205,7 +184,7 @@
 			$('#filter option[value="fs"]').prop('selected', 'selected');
 			$('input:radio[name=scan_pattern][value=1]').prop('checked', true);
 			$('input:radio[name=scan_direction][value=1]').prop('checked', true);
-			$('input:radio[name=bit_order][value=1]').prop('checked', true);
+			$('input:radio[name=storagelocationradio][value=1]').prop('checked', true);
 
 			// show the encoding for the display buffer (initialized to 0 for all pixels)
 
@@ -295,7 +274,7 @@
 
 			// Change event for the bit order radio button. Re-encode accordingly if it changes.
 
-			$('input:radio[name="bit_order"]').change(function () {
+			$('input:radio[name="storagelocationradio"]').change(function () {
 				glcd.storeOnFlash = (+$(this).val()) ? true : false;
 				$('#hexOutput').html(glcd.encode());
 			});
