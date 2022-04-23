@@ -153,3 +153,7 @@ body {
 	font-size: 0.8em;
 	color: #888888;
 }
+
+.toast-elevation {
+	z-index: 6400;
+}
