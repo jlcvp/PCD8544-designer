@@ -378,7 +378,7 @@
 
 			// copy to clipboard event handler
 			$("#copyToClipboardBtn").click(function () {
-				let text = glcd.encode()
+				let text = glcd.encode().replace(/&nbsp;/g, " ")
 				navigator.clipboard.writeText(text);
 				// alert("Copied to clipboard!")
 				var toastLiveExample = document.getElementById('copied-toast')
