@@ -85,12 +85,6 @@
 				</div>
 				<div class="tool">
 					<span class="me-1">Brush Size</span>
-					<!-- <span><select class="form-select" id="brushSize">
-							<option value="1" selected>1 px</option>
-							<option value="2">2 px</option>
-							<option value="4">4 px</option>
-						</select>
-					</span> -->
 					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 						<input type="radio" value="1" class="btn-check" name="brush-size-radio" id="brush-size1"
 							autocomplete="off" checked>
@@ -119,9 +113,9 @@
 						<label class="btn btn-outline-primary btn-sm" for="btnradio2">RAM</label>
 					</div>
 				</div>
-				<div class="tool">
-					<span class="me-1">Cell Size:</span>
-					<span>
+				<div class="tool grid">
+					<div class="g-col-6">Cell Size:</div>
+					<div class="g-col-6">
 						<select class="form-select" id="pixelSize">
 							<option value="5">5 px</option>
 							<option value="10" selected>10 px</option>
@@ -129,7 +123,7 @@
 							<option value="30">30 px</option>
 							<option value="50">50 px</option>
 						</select>
-					</span>
+					</div>
 				</div>
 				<div class="pt-3"></div>
 				<button id="clearBtn" type="button" class="btn btn-danger">Clear Canvas</button>
