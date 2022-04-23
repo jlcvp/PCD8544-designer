@@ -104,7 +104,7 @@
 
 			<!-- <div id="clearBtn" class="button">Clear</div> -->
 			<div class="pt-3"></div>
-			<button id="clearBton" type="button" class="btn btn-danger">Clear Canvas</button>
+			<button id="clearBtn" type="button" class="btn btn-danger">Clear Canvas</button>
 		</div>
 	</div>
 	<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
@@ -170,7 +170,7 @@
 
 // show the encoding for the display buffer (initialized to 0 for all pixels)
 
-	$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
+	$('#hexOutput').html(glcd.encode());
 
 // attach events to the canvas -- mousedown, mousemove, and mouseup
 
@@ -179,13 +179,13 @@
 		glcd.previousStates.push(glcd.stateBuffer.slice());
 		glcd.editable = true;
 		glcd.drawPixel(evt);
-		$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
+		$('#hexOutput').html(glcd.encode());
 	});
 
 	$('#canvas').mousemove(function(evt){
 		if (glcd.editable){
 			glcd.drawPixel(evt);
-			$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
+			$('#hexOutput').html(glcd.encode());
 		}
 	});
 
@@ -220,7 +220,7 @@
 	$('#clearBtn').click(function(){
 		glcd.clear();
 		$('#hexOutput').html('');
-		$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
+		$('#hexOutput').html(glcd.encode());
 	});
 
 // attach change event handler to the rows input. Clear and resize, reflect 0 encoding accordingly
@@ -236,7 +236,7 @@
 		glcd.ctx.canvas.height = value * glcd.pixelSize;
 		glcd.h = glcd.ctx.canvas.height;
 		glcd.clear();
-		$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
+		$('#hexOutput').html(glcd.encode());
 	});
 
 // change event handler for cols input. Similar to the rows change event handler
@@ -251,14 +251,14 @@
 		glcd.ctx.canvas.width = value * glcd.pixelSize;
 		glcd.w = glcd.ctx.canvas.width;
 		glcd.clear();
-		$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
+		$('#hexOutput').html(glcd.encode());
 	});
 
 // Change event for the bit order radio button. Re-encode accordingly if it changes.
 
 	$('input:radio[name="bit_order"]').change(function(){
 		glcd.storeOnFlash = (+$(this).val()) ? true : false;
-		$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
+		$('#hexOutput').html(glcd.encode());
 	});
 
 // check for shift key and ctrl-z or command-z 
@@ -274,7 +274,7 @@
 
 // if we popped the last item out of previousStates, don't draw the clear button (canvas is blank)
 
-				$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
+				$('#hexOutput').html(glcd.encode());
 			}	
 
 			return false;
@@ -370,7 +370,7 @@
 		glcd.restoreItem(key);
 		$('input[type="text"][name="rows"]').val(glcd.rows);
 		$('input[type="text"][name="cols"]').val(glcd.cols);
-		$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
+		$('#hexOutput').html(glcd.encode());
 	});
 
 	$('#fileImport').change(function(evt){
@@ -461,7 +461,7 @@
 			if ((glcd.rows === 48) && (glcd.cols === 84)){
 				glcd.clear();
 				$.when(dither_img.loadImage(e.target.result)).done(function(){
-					$('#hexOutput').html('<h3>Encoding:</h3><br/>' + glcd.encode());
+					$('#hexOutput').html(glcd.encode());
 					$('#ditherTools').show();
 				});
 
