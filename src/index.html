@@ -40,16 +40,21 @@
 	</div>
 	<div>
 		<div id="tools">
-			<div class="tool">
-				<span class="button" id="gridToggle">Hide Grid</span>&nbsp;|&nbsp;
+			<div class="pt-2">
+				<div class="btn-group" role="group" aria-label="Basic outlined example">
+					<button id="gridToggle" type="button" class="btn btn-outline-primary">Hide Grid</button>
+					<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						Show Code
+					</button>
+					<button id="saveItem" type="button" class="btn btn-outline-primary">Save Item</button>
+					<button id="openSavedItems" type="button" class="btn btn-outline-primary">Show Saved Items</button>
+				</div>
+				<!-- <span class="button" id="gridToggle">Hide Grid</span>&nbsp;|&nbsp; -->
 					<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-	Show Code
-  </button>
   
 				<!-- <span class="button" id="openEncoding">Show Code</span> -->
-				&nbsp;|&nbsp;
-				<span class="button" id="saveItem">Save Item</span>&nbsp;|&nbsp;<span class="button" id="openSavedItems">Show Saved Items</span>
+				
+				<!-- <span class="button" id="saveItem">Save Item</span>&nbsp;|&nbsp;<span class="button" id="openSavedItems">Show Saved Items</span> -->
 			</div>
 			<div class="tool">
 				Size:<input type="text" name="cols" size="2" maxlength="3" value="24"/>x
