@@ -117,7 +117,7 @@ function Display(canvasID){
 			}
 
 			retStr += `${fragment}${i==col_values.length-1 ? "" : ", "}`
-			if((i+1)%16 == 0 && i < col_values.length-1 && i>0 ) {
+			if((i+1)%8 == 0 && i < col_values.length-1 && i>0 ) {
 				retStr += "\n"
 				startOfLine = true
 			}
