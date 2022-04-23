@@ -192,7 +192,6 @@
 			$('input[type="text"][name="rows"]').val('24');
 			$('input[type="text"][name="cols"]').val('24');
 			$('#pixelSize option[value="20"]').prop('selected', 'selected');
-			$('#brushSize option[value="1"]').prop('selected', 'selected');
 
 			//	$('input:radio[name=filter][value="fs"]').prop('checked', true);
 			$('#filter option[value="fs"]').prop('selected', 'selected');
@@ -243,7 +242,7 @@
 			// attach a change event handler to the brush size select radio
 
 
-			$('input:radio[name="storagelocationradio"]').change(function () {
+			$('input:radio[name="brush-size-radio"]').change(function () {
 				glcd.brushSize = +$(this).val();
 			});
 
