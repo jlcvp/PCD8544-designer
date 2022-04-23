@@ -102,10 +102,35 @@
 			You can save your artworks and load them later, we use browser's local storage only and no drawing data is ever uploaded).
 		</p>
 	</footer>
+
+	<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+	Launch demo modal
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">Code Output</h5>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<div id="hexOutput"></div>
+		</div>
+		<div class="modal-footer">
+		  <button id="copyToClipboardBtn" type="button" class="btn btn-primary">Copy to clipboard</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+<!-- 	
 	<div class="modal" id="encodingContainer"><button type="button" class="btn-close close" aria-label="Close"></button>
 		<div id="hexOutput"></div>
 		<button id="copyToClipboardBtn" type="button" class="btn btn-outline-primary">COPY TO CLIPBOARD</button>
-	</div>
+	</div> -->
 	<input type="file" id="fileImport"/>
 	<div class="modal" id="jsonContainer"><button type="button" class="btn-close close" aria-label="Close"></button><div id="jsonOutput"></div></div>
 </div>
