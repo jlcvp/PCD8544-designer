@@ -166,12 +166,6 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- 	
-	<div class="modal" id="encodingContainer"><button type="button" class="btn-close close" aria-label="Close"></button>
-		<div id="hexOutput"></div>
-		<button id="copyToClipboardBtn" type="button" class="btn btn-outline-primary">COPY TO CLIPBOARD</button>
-	</div> -->
 		<input type="file" id="fileImport" />
 		<div class="modal" id="jsonContainer"><button type="button" class="old-close btn-close close"
 				aria-label="Close"></button>
@@ -198,7 +192,6 @@
 			$('input[type="text"][name="cols"]').val('24');
 			$('#pixelSize option[value="20"]').prop('selected', 'selected');
 
-			//	$('input:radio[name=filter][value="fs"]').prop('checked', true);
 			$('#filter option[value="fs"]').prop('selected', 'selected');
 			$('input:radio[name=scan_pattern][value=1]').prop('checked', true);
 			$('input:radio[name=scan_direction][value=1]').prop('checked', true);
@@ -211,7 +204,7 @@
 
 			// attach events to the canvas -- mousedown, mousemove, and mouseup
 
-			$('#canvas').mousedown(function (evt) {
+			$('#canvas').pointerdown(function (evt) {
 				// have to pass the stateBuffer array to previousStates by value, not by reference
 				glcd.previousStates.push(glcd.stateBuffer.slice());
 				glcd.editable = true;
@@ -219,14 +212,19 @@
 				$('#hexOutput').html(glcd.encode());
 			});
 
-			$('#canvas').mousemove(function (evt) {
+			$('#canvas').pointermove(function (evt) {
 				if (glcd.editable) {
 					glcd.drawPixel(evt);
 					$('#hexOutput').html(glcd.encode());
 				}
 			});
 
-			$('#canvas').mouseup(function () {
+			$('#canvas').pointerup(function () {
+				glcd.editable = false;
+			});
+
+
+			$('#canvas').pointerout(function () {
 				glcd.editable = false;
 			});
 
