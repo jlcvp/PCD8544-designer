@@ -68,63 +68,63 @@
 					<button id="openSavedItems" type="button" class="btn btn-outline-primary">Show Saved
 						Items</button>
 				</div>
-				<div class="container">
-					<div class="row">
-						<div class="col-3">Size</div>
-						<div class="col">
-							<input type="text" name="cols" size="2" maxlength="3" value="24" />x
-							<input type="text" name="rows" size="2" maxlength="2" value="24" />
-						</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-3">Size</div>
+					<div class="col-auto">
+						<input type="text" name="cols" size="2" maxlength="2" value="24" />x
+						<input type="text" name="rows" size="2" maxlength="2" value="24" />
 					</div>
-					<div class="row">
-						<div class="col-3">Color</div>
-						<div class="col">
-							<div class="swatch" id="white"></div>
-							<div class="swatch selected" id="black"></div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-3">Brush Size</div>
-						<div class="col btn-group" role="group" aria-label="Basic radio toggle button group">
-							<input type="radio" value="1" class="btn-check" name="brush-size-radio" id="brush-size1"
-								autocomplete="off" checked>
-							<label class="btn btn-outline-primary btn-sm" for="brush-size1">1 px</label>
-
-							<input type="radio" value="2" class="btn-check" name="brush-size-radio" id="brush-size2"
-								autocomplete="off">
-							<label class="btn btn-outline-primary btn-sm" for="brush-size2">2 px</label>
-
-							<input type="radio" value="4" class="btn-check" name="brush-size-radio" id="brush-size4"
-								autocomplete="off">
-							<label class="btn btn-outline-primary btn-sm" for="brush-size4">4 px</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-3">Memory Location</div>
-						<div class="col btn-group" role="group" aria-label="Basic radio toggle button group">
-							<input type="radio" value="1" class="btn-check" name="storagelocationradio" id="btnradio1"
-								autocomplete="off" checked>
-							<label class="btn btn-outline-primary btn-sm" for="btnradio1">ROM</label>
-
-							<input type="radio" value="0" class="btn-check" name="storagelocationradio" id="btnradio2"
-								autocomplete="off">
-							<label class="btn btn-outline-primary btn-sm" for="btnradio2">RAM</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-3">Cell Size</div>
-						<div class="col">
-							<select id="pixelSize">
-								<option value="5">5 px</option>
-								<option value="10" selected>10 px</option>
-								<option value="20">20 px</option>
-								<option value="30">30 px</option>
-								<option value="50">50 px</option>
-							</select>
-						</div>
-					</div>
-					<button id="clearBtn" type="button" class="mt-3 btn btn-danger">Clear Canvas</button>
 				</div>
+				<div class="row">
+					<div class="col-3">Color</div>
+					<div class="col-auto">
+						<div class="swatch" id="white"></div>
+						<div class="swatch selected" id="black"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3">Brush Size</div>
+					<div class="col-auto btn-group" role="group" aria-label="Basic radio toggle button group">
+						<input type="radio" value="1" class="btn-check" name="brush-size-radio" id="brush-size1"
+							autocomplete="off" checked>
+						<label class="btn btn-outline-primary btn-sm" for="brush-size1">1 px</label>
+
+						<input type="radio" value="2" class="btn-check" name="brush-size-radio" id="brush-size2"
+							autocomplete="off">
+						<label class="btn btn-outline-primary btn-sm" for="brush-size2">2 px</label>
+
+						<input type="radio" value="4" class="btn-check" name="brush-size-radio" id="brush-size4"
+							autocomplete="off">
+						<label class="btn btn-outline-primary btn-sm" for="brush-size4">4 px</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3">Memory Location</div>
+					<div class="col-auto btn-group" role="group" aria-label="Basic radio toggle button group">
+						<input type="radio" value="1" class="btn-check" name="storagelocationradio" id="btnradio1"
+							autocomplete="off" checked>
+						<label class="btn btn-outline-primary btn-sm" for="btnradio1">ROM</label>
+
+						<input type="radio" value="0" class="btn-check" name="storagelocationradio" id="btnradio2"
+							autocomplete="off">
+						<label class="btn btn-outline-primary btn-sm" for="btnradio2">RAM</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3">Cell Size</div>
+					<div class="col-auto">
+						<select id="pixelSize">
+							<option value="5">5 px</option>
+							<option value="10" selected>10 px</option>
+							<option value="20">20 px</option>
+							<option value="30">30 px</option>
+							<option value="50">50 px</option>
+						</select>
+					</div>
+				</div>
+				<button id="clearBtn" type="button" class="mt-3 btn btn-danger">Clear Canvas</button>
 			</div>
 		</div>
 		<footer class="d-flex flex-wrap justify-content-center align-items-center py-3 my-4 border-top">
