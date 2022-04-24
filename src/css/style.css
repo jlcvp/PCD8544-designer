@@ -54,9 +54,10 @@
 .swatch {
 	float: right; 
 	border: 1px solid black;
-	height: 20px;
-	width: 20px;
+	height: 48px;
+	width: 48px;
 	margin-right: 5px;
+	border-radius: 4px;
 	cursor: pointer;
 }
 
