@@ -45,17 +45,11 @@
 	margin-top: 10px;
 }
 
-#colorBar{
-	margin: 0px auto;
-	margin-top: 10px;
-	width: 120px;
-}
-
 .swatch {
 	float: right; 
 	border: 1px solid black;
-	height: 48px;
-	width: 48px;
+	height: 36px;
+	width: 36px;
 	margin-right: 5px;
 	border-radius: 4px;
 	cursor: pointer;
