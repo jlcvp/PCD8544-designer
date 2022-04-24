@@ -40,6 +40,10 @@
 	border: 2px solid red;
 }
 
+.debug {
+	border: 1px solid red;
+}
+
 #tempCanvas {
 	z-index: 1000;
 }
