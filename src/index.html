@@ -172,7 +172,8 @@
 			<div id="jsonOutput"></div>
 		</div>
 	</div>
-	<script src="./scripts/jquery-1.7.2.min.js" charset="utf-8"></script>
+	<!-- <script src="./scripts/jquery-1.7.2.min.js" charset="utf-8"></script> -->
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" charset="utf-8"></script>
 	<script src="./scripts/Display.js"></script>
 	<script src="./scripts/Dither.js"></script>
 	<script>
@@ -204,7 +205,7 @@
 
 			// attach events to the canvas -- mousedown, mousemove, and mouseup
 
-			$('#canvas').pointerdown(function (evt) {
+			$('#canvas').on('pointerdown', function(evt) {
 				// have to pass the stateBuffer array to previousStates by value, not by reference
 				glcd.previousStates.push(glcd.stateBuffer.slice());
 				glcd.editable = true;
@@ -212,19 +213,19 @@
 				$('#hexOutput').html(glcd.encode());
 			});
 
-			$('#canvas').pointermove(function (evt) {
+			$('#canvas').on('pointermove',function (evt) {
 				if (glcd.editable) {
 					glcd.drawPixel(evt);
 					$('#hexOutput').html(glcd.encode());
 				}
 			});
 
-			$('#canvas').pointerup(function () {
+			$('#canvas').on('pointerup', function () {
 				glcd.editable = false;
 			});
 
 
-			$('#canvas').pointerout(function () {
+			$('#canvas').on('pointerout', function () {
 				glcd.editable = false;
 			});
 
@@ -378,11 +379,11 @@
 			$(document).on('click', '.old-close', function () {
 				$(this).parent().hide();
 			});
-
+			let _navigator = navigator
 			// copy to clipboard event handler
 			$("#copyToClipboardBtn").click(function () {
 				let text = glcd.encode().replace(/&nbsp;/g, " ")
-				navigator.clipboard.writeText(text);
+				_navigator.clipboard.writeText(text);
 				// alert("Copied to clipboard!")
 				var toastLiveExample = document.getElementById('copied-toast')
 				var toast = new bootstrap.Toast(toastLiveExample)
