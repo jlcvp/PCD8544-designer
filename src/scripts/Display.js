@@ -132,7 +132,6 @@ function Display(canvasID){
 	},
 
 	this.drawPixel = function(evt){
-		console.log("evt: ", evt)
 		var s = this.pixelSize;
 
 // play nice with firefox
