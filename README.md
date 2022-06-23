@@ -9,6 +9,9 @@ This web application was written
 for my own use and was designed to run locally on my own computer. I tested it with recent releases of
 Firefox and Safari. I did not test it in Edge nor Chrome but it should work as well.
 
+![6V0glx_56429a4428ebe583e9f493c8d6f68ce7_00-00-10_00-00-25_2](https://user-images.githubusercontent.com/2317417/175292118-81ad66a2-9ee1-446f-a6f7-699fdf9a79c4.gif)
+
+
 ## Usage:
 ### Live version
 The project is deployed to firebase hosting at [https://PCD8544designer.web.app](https://pcd8544designer.web.app/)  
